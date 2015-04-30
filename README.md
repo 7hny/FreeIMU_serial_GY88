@@ -22,6 +22,7 @@ _FreeIMU library by Fabio Varesano - varesano.net, FREQ:16 MHz, LIB_VERSION: DEV
 _NOTE: there may be a delay until the MPU resets – do not move the IMU if are using the Invensene MPUs._
 
 * You can play with others commands to see the response of the Arduino, here is the current list
+
       “1’ = Reset the IMU
 
       “2” = Zero the Quaternion Matrix
