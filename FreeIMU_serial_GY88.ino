@@ -32,6 +32,7 @@
 #define BaudRate 115200
 #define gpsSerial Serial1
 #define outSerial Serial
+//#define outSerial Serial2
 
 static const unsigned long GPSBaud = 9600;
 
@@ -296,6 +297,7 @@ void loop() {
 				val_array[10] = (float)gps.speed.isValid();
 				val_array[11] = (float)gps.charsProcessed();
 				serialPrintFloatArr(val_array, 12);
+
 				outSerial.print('\n');
 				smartDelay(20);
 #else

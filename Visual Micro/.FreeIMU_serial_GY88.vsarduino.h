@@ -79,4 +79,12 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <FreeIMU_serial_GY88.ino>
+#include <AHRS.h>
+#include <CommunicationUtils.cpp>
+#include <CommunicationUtils.h>
+#include <FreeIMU.cpp>
+#include <FreeIMU.h>
+#include <MARGUpdateFilter.h>
+#include <MadgwickAHRS.h>
+#include <calibration.h>
 #endif
