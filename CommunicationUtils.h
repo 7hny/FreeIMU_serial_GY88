@@ -1,6 +1,5 @@
 #ifndef CommunitationUtils_h
 #define CommunitationUtils_h
-#define outSerial Serial2
 
 #include "Arduino.h"
 

@@ -27,14 +27,7 @@
 #include "DCM.h"
 #include "FilteringScheme.h"
 #include "RunningAverage.h"
-
-#define HAS_GPS 1
-#define BaudRate 115200
-#define gpsSerial Serial1
-#define outSerial Serial
-//#define outSerial Serial2
-
-static const unsigned long GPSBaud = 9600;
+#include "FreeIMU_settings.h"
 
 
 KalmanFilter kFilters[4];
@@ -64,7 +57,7 @@ unsigned long start;
 char cmd, tempCorr;
 
 void setup() {
-	outSerial.begin(BaudRate);
+	outSerial.begin(outBaudRate);
 	Wire.begin();
 
 	float qVal = 0.125; //Set Q Kalman Filter(process noise) value between 0 and 1

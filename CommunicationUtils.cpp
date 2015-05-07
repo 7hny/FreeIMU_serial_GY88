@@ -1,4 +1,5 @@
 #include "CommunicationUtils.h"
+#include "FreeIMU_settings.h"
 
 void serialPrintFloatArr(float * arr, int length) {
   for(int i=0; i<length; i++) {
