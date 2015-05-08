@@ -51,7 +51,7 @@ PrintWriter output;
 
 Serial myPort;  // Create object from Serial class
 
-final String serialPort = "COM4"; // replace this with your serial port. On windows you will need something like "COM1".
+final String serialPort = "COM7"; // replace this with your serial port. On windows you will need something like "COM1".
 int BaudRate=115200;
 String File_Name = "IMU9250-MARG1.txt";
 int HAS_GPS = 1;

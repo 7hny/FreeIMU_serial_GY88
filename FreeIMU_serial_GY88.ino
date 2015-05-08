@@ -22,12 +22,21 @@
 
 //#define DEBUG
 #include "DebugUtils.h"
+#include "FreeIMU_settings.h"
 #include "CommunicationUtils.h"
 #include "FreeIMU.h"
 #include "DCM.h"
 #include "FilteringScheme.h"
 #include "RunningAverage.h"
-#include "FreeIMU_settings.h"
+
+
+//#define HAS_GPS 1
+//
+//#define gpsSerial Serial1
+//#define outSerial Serial2
+//
+//static const long GPSBaud = 9600;
+//static const long outBaudRate = 115200;
 
 
 KalmanFilter kFilters[4];
@@ -57,6 +66,7 @@ unsigned long start;
 char cmd, tempCorr;
 
 void setup() {
+
 	outSerial.begin(outBaudRate);
 	Wire.begin();
 
@@ -94,6 +104,8 @@ void setup() {
 }
 
 void loop() {
+
+
 	if (outSerial.available()) {
 		cmd = outSerial.read();
 		if (cmd == 'v') {
