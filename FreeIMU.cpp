@@ -658,7 +658,8 @@ void FreeIMU::RESET_Q() {
 	// init HMC5843
 	magn.init(false); // Don't set mode yet, we'll do that later on.
 	// Calibrate HMC using self test, not recommended to change the gain after calibration.
-	magn.calibrate(1); // Use gain 1=default, valid 0-7, 7 not recommended.
+	//magn.calibrate(1); // Use gain 1=default, valid 0-7, 7 not recommended.
+	magn.calibrate(0); // Use gain 1=default, valid 0-7, 7 not recommended.
 	// Single mode conversion was used in calibration, now set continuous mode
 	magn.setMode(0);
 	delay(10);

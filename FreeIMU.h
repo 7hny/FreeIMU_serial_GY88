@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //Magnetic declination angle for iCompass
 //#define MAG_DEC 4 //+4.0 degrees for Israel
 //#define MAG_DEC -13.1603  //degrees for Flushing, NY
-#define MAG_DEC 4  //degrees for Wroclaw, PL
+#define MAG_DEC 4.20  //degrees for Wroclaw, PL
 //#define MAG_DEC 0
 
 //Number of samples to average in iCompass
@@ -64,7 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Set filter type: 1 = Madgwick Gradient Descent, 0 - Madgwick implementation of Mahoney DCM
 // in Quaternion form, 3 = Madwick Original Paper AHRS, 4 - DCM Implementation
-#define MARG 3
+#define MARG 1
 
 // proportional gain governs rate of convergence to accelerometer/magnetometer
 // integral gain governs rate of convergence of gyroscope biases
@@ -140,6 +140,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	#define twoKpDef  (2.0f * 1.75f)	//works with and without mag enabled, 1.75
 	#define twoKiDef  (2.0f * 0.0075f)  //.1625f
 	#define betaDef  0.015f
+	//Used for DCM filter
+	const float Kp_ROLLPITCH = 1.2f;  //was .3423
+	const float Ki_ROLLPITCH = 0.0234f;
+	const float Kp_YAW = 1.75f;   // was 1.2 and 0.02
+	const float Ki_YAW = 0.002f;
+#elif defined(GY_88)
+	#define twoKpDef  (2.0f * 0.5f)
+	#define twoKiDef  (2.0f * 0.1f)
+	//#define betaDef  0.1f
+    #define betaDef  0.005f // may want to make it smaller
 	//Used for DCM filter
 	const float Kp_ROLLPITCH = 1.2f;  //was .3423
 	const float Ki_ROLLPITCH = 0.0234f;
