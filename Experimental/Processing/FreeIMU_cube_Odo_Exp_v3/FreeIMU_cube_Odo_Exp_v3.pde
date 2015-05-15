@@ -54,7 +54,7 @@ Serial myPort;  // Create object from Serial class
 final String serialPort = "COM7"; // replace this with your serial port. On windows you will need something like "COM1".
 int BaudRate=115200;
 String File_Name = "IMU9250-MARG1.txt";
-int HAS_GPS = 1;
+int HAS_GPS = 0;
 
 //setting a 1D Kalman filter
 //uncomment if you have removed complimentary altitude filter from library

@@ -95,6 +95,7 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <MARGUpdateFilter.h>
 #include <MadgwickAHRS.h>
 #include <calibration.h>
+#include <pitches.h>
 #include <resource.h>
 #include <vector_math.h>
 #endif
