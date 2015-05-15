@@ -97,6 +97,9 @@
     <ClInclude Include="MARGUpdateFilter.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="pitches.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="vector_math.h">
       <FileType>CppCode</FileType>

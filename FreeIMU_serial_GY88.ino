@@ -74,6 +74,7 @@ void setup() {
 	Wire.begin();
 
 	float qVal = 0.125; //Set Q Kalman Filter(process noise) value between 0 and 1
+
 	float rVal = 32.; //Set K Kalman Filter (sensor noise)
 
 	for (int i = 0; i <= k_index; i++) { //Initialize Kalman Filters for 10 neighbors
@@ -106,57 +107,99 @@ void setup() {
 	pinMode(13, OUTPUT);
 }
 
+int buzzerPin = 53;
+int toneOK = NOTE_C8;
+int toneError = NOTE_C4;
+
+void beepError(){
+	tone(buzzerPin, toneError, 400);
+}
+
+void beepOK(){
+	tone(buzzerPin, toneOK, 100);
+}
+
+void beepLocked(){
+	tone(buzzerPin, toneError, 400);
+	delay(500);
+	tone(buzzerPin, toneError, 400);
+}
+
+void beepReset(){
+	tone(buzzerPin, toneOK, 100);
+	delay(200);
+	tone(buzzerPin, toneOK, 100);
+}
+
+
+
 void loop() {
 
 
 	if (outSerial.available()) {
 		cmd = outSerial.read();
 		if (cmd == 'v') {
+			beepOK();
 			cmdGetLibVersion();
 		}
 		else if (cmd == '1'){
+			beepOK();
 			cmdResetIMU();
 		}
 		else if (cmd == '2'){
+			beepOK();
 			cmdZeroQ();
 		}
 		else if (cmd == 'g'){
+			beepOK();
 			cmdZeroGyros();    
 		}
 		else if (cmd == 't'){
+			beepOK();
 			cmdEnableTempeComp();
 		}
 		else if (cmd == 'f'){
+			beepOK();
 			cmdDisableTempeComp();
 		}
 		else if (cmd == 'p'){
+			beepOK();
 			cmdSeaPress();
 		}
 		else if (cmd == 'r') {
+			beepOK();
 			cmdRawValues();
 		}
 		else if (cmd == 'b') {
+			beepOK();
 			cmdRawCalibValues();
 		}
 		else if (cmd == 'q') {
+			beepOK();
 			cmdGetQuat();
 		}
 		else if (cmd == 'z') {
+			beepOK();
 			cmdGetCalib();
 		}
 		else if (cmd == 'a') {
+			beepOK();
 			cmdGetCalibAccKalman();
 		}
 		else if (cmd == 'c') {
+			beepOK();
 			cmdWriteCalibEprom();
 		}
 		else if (cmd == 'x') {
+			beepOK();
 			cmdLoadCalibEprom();
 		}
 		else if (cmd == 'C') { // check calibration values
+			beepOK();
 			cmdGetCalibData();
 		}
 		else if (cmd == 'd') { // debugging outputs
+			beepOK();
 			cmdDebug();
 		}
 	}
