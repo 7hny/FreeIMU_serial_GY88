@@ -54,7 +54,7 @@ Serial myPort;  // Create object from Serial class
 final String serialPort = "COM7"; // replace this with your serial port. On windows you will need something like "COM1".
 int BaudRate=115200;
 String File_Name = "IMU9250-MARG1.txt";
-int HAS_GPS = 0;
+int HAS_GPS = 1;
 
 //setting a 1D Kalman filter
 //uncomment if you have removed complimentary altitude filter from library
@@ -155,7 +155,7 @@ float rad2degs    = 180/PI;
 //flags
 int calib = 0;             // Turn calibration on or off
 int ArtHorFlg = 0;         // Make artificial horizion visible or not
-int PrintOutput = 1;       // Output raw data to standard file name
+int PrintOutput = 0;       // Output raw data to standard file name
 // Switch for ODO
 int cube_odo = 0;          // Execute ODO routine
 

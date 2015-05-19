@@ -32,16 +32,6 @@
 // extras
 #include "pitches.h"
 
-
-//#define HAS_GPS 1
-//
-//#define gpsSerial Serial1
-//#define outSerial Serial2
-//
-//static const long GPSBaud = 9600;
-//static const long outBaudRate = 115200;
-
-
 KalmanFilter kFilters[4];
 int k_index = 3;
 
@@ -94,11 +84,11 @@ void setup() {
 	//a default configuration to the eeprom or permanent storage.
 	//If you do not have this setup you will have to remove the
 	//following lines and the additional code at the end of the sketch.
-	gpsSerial.begin(9600);
+	////gpsSerial.begin(9600);
 	//Settings Array
 	//Code based on http://playground.arduino.cc/UBlox/GPS
-	byte settingsArray[] = { 0x04 }; // Not really used for this example
-	configureUblox(settingsArray);
+	////byte settingsArray[] = { 0x04 }; // Not really used for this example
+	////configureUblox(settingsArray);
 	//Retain this line
 	gpsSerial.begin(GPSBaud);
 #endif
@@ -107,16 +97,19 @@ void setup() {
 	pinMode(13, OUTPUT);
 }
 
+
+// Buzzer settings ///////////////////////////////////////////////////////////////////////////
+
 int buzzerPin = 53;
 int toneOK = NOTE_C8;
 int toneError = NOTE_C4;
 
 void beepError(){
-	tone(buzzerPin, toneError, 400);
+	tone(buzzerPin, toneError, 200);
 }
 
 void beepOK(){
-	tone(buzzerPin, toneOK, 100);
+	tone(buzzerPin, toneOK, 50);
 }
 
 void beepLocked(){
@@ -131,9 +124,120 @@ void beepReset(){
 	tone(buzzerPin, toneOK, 100);
 }
 
+// Serial command settings ////////////////////////////////////////////////////////////////////
+
+#define MAX_COMMAND_LENGTH 255
+
+int incomingByte = 0;
+int charCount = 0;
+char command[MAX_COMMAND_LENGTH + 1]; // leave space for \0
+bool locked = false;
+
+
+
+char* replyError = { "COMMAND NOT FOUND\n" };
+
+char resetByte = '!';
+char stopByte = '#';
+
+bool checkCommand(char* input){
+	if (strcmp(command, input) == 0) {
+		beepOK();
+		return true;
+	}
+	return false;
+}
 
 
 void loop() {
+
+	//if (Serial.available()) {
+	//	incomingByte = Serial.read();
+
+	//	if ((char)incomingByte == resetByte) {
+	//		locked = false;
+	//		charCount = 0;
+	//		return;
+	//	}
+
+	//	if (locked) {
+	//		Serial.println("@");
+	//		return;
+	//	}
+
+	//	if ((char)incomingByte != stopByte) {
+	//		if (charCount > MAX_COMMAND_LENGTH - 1) {
+	//			Serial.println("@");
+	//			locked = true;
+	//			return;
+	//		}
+	//		else {
+	//			command[charCount] = (char)incomingByte;
+	//			charCount++;
+	//		}
+	//	}
+	//	else {
+	//		command[charCount] = '\0';
+	//		charCount = 0;
+	//		if (checkCommand("v")) {
+	//			cmdGetLibVersion();
+	//		}
+	//		//else if (cmd == '1'){
+	//		//	beepOK();
+	//		//	cmdResetIMU();
+	//		//}
+	//		else if (checkCommand("1")){
+	//			cmdResetIMU();
+	//		}
+	//		else if (checkCommand("2")){
+	//			cmdZeroQ();
+	//		}
+	//		else if (checkCommand("g")){
+	//			cmdZeroGyros();
+	//		}
+	//		else if (checkCommand("t")){
+	//			cmdEnableTempeComp();
+	//		}
+	//		else if (checkCommand("f")){
+	//			cmdDisableTempeComp();
+	//		}
+	//		else if (checkCommand("p")){
+	//			cmdSeaPress();
+	//		}
+	//		else if (checkCommand("r")) {
+	//			cmdRawValues();
+	//		}
+	//		else if (checkCommand("b")) {
+	//			cmdRawCalibValues();
+	//		}
+	//		else if (checkCommand("q")) {
+	//			cmdGetQuat();
+	//		}
+	//		else if (checkCommand("z")) {
+	//			cmdGetCalib();
+	//		}
+	//		else if (checkCommand("a")) {
+	//			cmdGetCalibAccKalman();
+	//		}
+	//		else if (checkCommand("c")) {
+	//			cmdWriteCalibEprom();
+	//		}
+	//		else if (checkCommand("x")) {
+	//			cmdLoadCalibEprom();
+	//		}
+	//		else if (checkCommand("c")) { // check calibration values
+	//			cmdGetCalibData();
+	//		}
+	//		else if (checkCommand("d")) { // debugging outputs
+	//			cmdDebug();
+	//		}
+	//		else{
+	//			//beepError();
+	//			//Serial.println(replyError);
+	//		}
+
+	//	}
+	//}
 
 
 	if (outSerial.available()) {
@@ -206,8 +310,9 @@ void loop() {
 }
 
 char serial_busy_wait() {
+
 	while (!outSerial.available()) {
-		; // do nothing until ready
+		// do nothing until ready
 	}
 	return outSerial.read();
 }
@@ -452,6 +557,7 @@ void cmdGetQuat(){
 
 //outputs all calibrated and calculated values for use in the processing sketch
 void cmdGetCalib(){
+
 	float val_array[19] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	uint8_t count = serial_busy_wait();
 	for (uint8_t i = 0; i<count; i++) {

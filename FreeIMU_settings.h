@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 
-#define HAS_GPS 0
+#define HAS_GPS 1
 
 #define gpsSerial Serial1
 #define outSerial Serial
